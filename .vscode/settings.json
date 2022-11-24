@@ -1,0 +1,21 @@
+{
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "svelte",
+    "stylus"
+  ],
+  "eslint.format.enable": true,
+  "eslint.validate": [
+    "svelte",
+    "typescript",
+    "javascript"
+  ],
+  "editor.formatOnSave": false,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  }
+}
