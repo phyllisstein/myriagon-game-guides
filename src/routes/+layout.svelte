@@ -1,5 +1,4 @@
 <script>
-
   import { fly } from 'svelte/transition'
 
   let value = 0
@@ -11,7 +10,7 @@
   {#if value}
     <p>Value is truthy</p>
   {:else}
-    <p>Value is falsy</p>aa
+    <p>Value is falsy</p>
   {/if}
 
   Who likes {value} values?

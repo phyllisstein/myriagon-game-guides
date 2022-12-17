@@ -1,0 +1,27 @@
+[
+  "trigger",
+  "/app",
+  {
+    "name": "server-restart",
+    "expression": [
+      "anyof",
+      [
+        "name",
+        "vite.config.ts"
+      ],
+      [
+        "name",
+        "app.html"
+      ],
+      [
+        "name",
+        "svelte.config.js"
+      ]
+    ],
+    "command": [
+      "./scripts/develop.sh",
+      "serve"
+    ],
+    "append_files": false
+  }
+]
