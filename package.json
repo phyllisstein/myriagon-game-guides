@@ -51,6 +51,7 @@
   "dependencies": {
     "common-tags": "^1.8.2",
     "gsap": "^3.11.4",
+    "lexical": "^0.7.5",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",
     "ramda": "^0.28.0",
