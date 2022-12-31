@@ -207,6 +207,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.17.8":
+  version: 7.20.7
+  resolution: "@babel/runtime@npm:7.20.7"
+  dependencies:
+    regenerator-runtime: ^0.13.11
+  checksum: 4629ce5c46f06cca9cfb9b7fc00d48003335a809888e2b91ec2069a2dcfbfef738480cff32ba81e0b7c290f8918e5c22ddcf2b710001464ee84ba62c7e32a3a3
+  languageName: node
+  linkType: hard
+
 "@babel/template@npm:^7.18.10":
   version: 7.18.10
   resolution: "@babel/template@npm:7.18.10"
@@ -552,6 +561,86 @@ __metadata:
     "@jridgewell/resolve-uri": 3.1.0
     "@jridgewell/sourcemap-codec": 1.4.14
   checksum: 9d703b859cff5cd83b7308fd457a431387db5db96bd781a63bf48e183418dd9d3d44e76b9e4ae13237f6abeeb25d739ec9215c1d5bfdd08f66f750a50074a339
+  languageName: node
+  linkType: hard
+
+"@lexical/clipboard@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "@lexical/clipboard@npm:0.7.5"
+  dependencies:
+    "@lexical/html": 0.7.5
+    "@lexical/list": 0.7.5
+    "@lexical/selection": 0.7.5
+    "@lexical/utils": 0.7.5
+  peerDependencies:
+    lexical: 0.7.5
+  checksum: a3fb01ecd9d64b3f789fa8323e24d2cb70c50e1602e77d9daec2dfecd7794c9ca28115ed50046aca30f94f722ea5a57036b9777557efc5ae699e9315235f1716
+  languageName: node
+  linkType: hard
+
+"@lexical/html@npm:0.7.5":
+  version: 0.7.5
+  resolution: "@lexical/html@npm:0.7.5"
+  dependencies:
+    "@lexical/selection": 0.7.5
+  peerDependencies:
+    lexical: 0.7.5
+  checksum: bf88318aacf5613f436a24c9698bc4f5784073ad75c7a05ecab38893c7765f2a57fcba9661a260bc7d15c040fc33c1a505f508a5bb7509d9001a62873272d062
+  languageName: node
+  linkType: hard
+
+"@lexical/list@npm:0.7.5":
+  version: 0.7.5
+  resolution: "@lexical/list@npm:0.7.5"
+  dependencies:
+    "@lexical/utils": 0.7.5
+  peerDependencies:
+    lexical: 0.7.5
+  checksum: f44602977ad4194019de5fe3cee6b3fa5ce29604a4db375f184376009d0e2e6bb1d25764e1335193e5783314b9ea90b568d0ee23472c26ff34c3eadbfcf52604
+  languageName: node
+  linkType: hard
+
+"@lexical/rich-text@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "@lexical/rich-text@npm:0.7.5"
+  peerDependencies:
+    "@lexical/clipboard": 0.7.5
+    "@lexical/selection": 0.7.5
+    "@lexical/utils": 0.7.5
+    lexical: 0.7.5
+  checksum: 8b58eae1161301ae2c01b7c97e044a8934ef501b90d5e90578b29ce7e0b5ddb85e66349eb6ccfda0b0bb19827095701133d0062155b12b180c7b0e5a1a23ede5
+  languageName: node
+  linkType: hard
+
+"@lexical/selection@npm:0.7.5, @lexical/selection@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "@lexical/selection@npm:0.7.5"
+  peerDependencies:
+    lexical: 0.7.5
+  checksum: 57907d740daacdff0a66f141cfc9bd1827a07dcbe07d2517bb7c0ae1258d7219ae349a1cecd3c22e4a4b1346a827a2a3948aebdc9642ebb68193fe4c7c0fd5b6
+  languageName: node
+  linkType: hard
+
+"@lexical/table@npm:0.7.5":
+  version: 0.7.5
+  resolution: "@lexical/table@npm:0.7.5"
+  dependencies:
+    "@lexical/utils": 0.7.5
+  peerDependencies:
+    lexical: 0.7.5
+  checksum: 6d0b3177d419e2f8ad833edcaa3525f3df337e29d83c65ed1c61db50101ea1b5117f94bb33f364f72947e20cfd9988270751fd9367dbc106c3f7efe9b0030615
+  languageName: node
+  linkType: hard
+
+"@lexical/utils@npm:0.7.5, @lexical/utils@npm:^0.7.5":
+  version: 0.7.5
+  resolution: "@lexical/utils@npm:0.7.5"
+  dependencies:
+    "@lexical/list": 0.7.5
+    "@lexical/table": 0.7.5
+  peerDependencies:
+    lexical: 0.7.5
+  checksum: 9f46fe564198f52777f5c90b672909df557e52a1e05c4d3ca4d5268f3b6ee8d155d24115fb06e3b9e16cc5fe03c8b64e8eeac8416c4985edd49b8e28d1814b51
   languageName: node
   linkType: hard
 
@@ -980,6 +1069,10 @@ __metadata:
   resolution: "@voxmedia/myriagon-game-guides@workspace:."
   dependencies:
     "@fontsource/fira-mono": ^4.5.10
+    "@lexical/clipboard": ^0.7.5
+    "@lexical/rich-text": ^0.7.5
+    "@lexical/selection": ^0.7.5
+    "@lexical/utils": ^0.7.5
     "@neoconfetti/svelte": ^1.0.0
     "@sveltejs/adapter-auto": next
     "@sveltejs/kit": next
@@ -999,6 +1092,7 @@ __metadata:
     lexical: ^0.7.5
     lodash: ^4.17.21
     lodash-es: ^4.17.21
+    neo4j-driver: ^5.3.0
     postcss: ^8.4.20
     postcss-html: ^1.5.0
     postcss-jsx: ^0.36.4
@@ -1240,6 +1334,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"base64-js@npm:^1.3.1":
+  version: 1.5.1
+  resolution: "base64-js@npm:1.5.1"
+  checksum: 669632eb3745404c2f822a18fc3a0122d2f9a7a13f7fb8b5823ee19d1d2ff9ee5b52c53367176ea4ad093c332fd5ab4bd0ebae5a8e27917a4105a4cfc86b1005
+  languageName: node
+  linkType: hard
+
 "binary-extensions@npm:^2.0.0":
   version: 2.2.0
   resolution: "binary-extensions@npm:2.2.0"
@@ -1293,6 +1394,16 @@ __metadata:
   version: 0.2.13
   resolution: "buffer-crc32@npm:0.2.13"
   checksum: 06252347ae6daca3453b94e4b2f1d3754a3b146a111d81c68924c22d91889a40623264e95e67955b1cb4a68cbedf317abeabb5140a9766ed248973096db5ce1c
+  languageName: node
+  linkType: hard
+
+"buffer@npm:^6.0.3":
+  version: 6.0.3
+  resolution: "buffer@npm:6.0.3"
+  dependencies:
+    base64-js: ^1.3.1
+    ieee754: ^1.2.1
+  checksum: 5ad23293d9a731e4318e420025800b42bf0d264004c0286c8cc010af7a270c7a0f6522e84f54b9ad65cbd6db20b8badbfd8d2ebf4f80fa03dab093b89e68c3f9
   languageName: node
   linkType: hard
 
@@ -2789,6 +2900,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ieee754@npm:^1.2.1":
+  version: 1.2.1
+  resolution: "ieee754@npm:1.2.1"
+  checksum: 5144c0c9815e54ada181d80a0b810221a253562422e7c6c3a60b1901154184f49326ec239d618c416c1c5945a2e197107aee8d986a3dd836b53dffefd99b5e7e
+  languageName: node
+  linkType: hard
+
 "ignore@npm:^5.2.0":
   version: 5.2.0
   resolution: "ignore@npm:5.2.0"
@@ -3635,6 +3753,36 @@ __metadata:
   languageName: node
   linkType: hard
 
+"neo4j-driver-bolt-connection@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "neo4j-driver-bolt-connection@npm:5.3.0"
+  dependencies:
+    buffer: ^6.0.3
+    neo4j-driver-core: ^5.3.0
+    string_decoder: ^1.3.0
+  checksum: 7454af0683f2935ada1b4ed64418b91b73762a943e7fabd7753eef0829054d0c8f7776b788cabedf7729ba6fd3384179e64aaa42b46ca92c2151ac60f4673a60
+  languageName: node
+  linkType: hard
+
+"neo4j-driver-core@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "neo4j-driver-core@npm:5.3.0"
+  checksum: 16b00b7dd28baecce1d012d8953356984f48cf4f954f82260725edda0416a5a2d934b110d0c5da06508841660d010607fca962b587aa842d981dc5c2be761f77
+  languageName: node
+  linkType: hard
+
+"neo4j-driver@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "neo4j-driver@npm:5.3.0"
+  dependencies:
+    "@babel/runtime": ^7.17.8
+    neo4j-driver-bolt-connection: ^5.3.0
+    neo4j-driver-core: ^5.3.0
+    rxjs: ^7.5.5
+  checksum: 0a702e9bfd7b492b416487970ab028ac32d48bd0a967f6d491a651b9b0142553aa16ade2d91864bdbeeb4f77d8462af9ff6f83bb50349d739846620984823889
+  languageName: node
+  linkType: hard
+
 "node-gyp@npm:latest":
   version: 9.3.1
   resolution: "node-gyp@npm:9.3.1"
@@ -4149,6 +4297,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"regenerator-runtime@npm:^0.13.11":
+  version: 0.13.11
+  resolution: "regenerator-runtime@npm:0.13.11"
+  checksum: 27481628d22a1c4e3ff551096a683b424242a216fee44685467307f14d58020af1e19660bf2e26064de946bad7eff28950eae9f8209d55723e2d9351e632bbb4
+  languageName: node
+  linkType: hard
+
 "regexp.prototype.flags@npm:^1.4.3":
   version: 1.4.3
   resolution: "regexp.prototype.flags@npm:1.4.3"
@@ -4284,6 +4439,15 @@ __metadata:
   dependencies:
     queue-microtask: ^1.2.2
   checksum: cb4f97ad25a75ebc11a8ef4e33bb962f8af8516bb2001082ceabd8902e15b98f4b84b4f8a9b222e5d57fc3bd1379c483886ed4619367a7680dad65316993021d
+  languageName: node
+  linkType: hard
+
+"rxjs@npm:^7.5.5":
+  version: 7.8.0
+  resolution: "rxjs@npm:7.8.0"
+  dependencies:
+    tslib: ^2.1.0
+  checksum: 61b4d4fd323c1043d8d6ceb91f24183b28bcf5def4f01ca111511d5c6b66755bc5578587fe714ef5d67cf4c9f2e26f4490d4e1d8cabf9bd5967687835e9866a2
   languageName: node
   linkType: hard
 
@@ -4616,7 +4780,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"string_decoder@npm:^1.1.1":
+"string_decoder@npm:^1.1.1, string_decoder@npm:^1.3.0":
   version: 1.3.0
   resolution: "string_decoder@npm:1.3.0"
   dependencies:
@@ -5078,7 +5242,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^2.4.0, tslib@npm:^2.4.1":
+"tslib@npm:^2.1.0, tslib@npm:^2.4.0, tslib@npm:^2.4.1":
   version: 2.4.1
   resolution: "tslib@npm:2.4.1"
   checksum: 19480d6e0313292bd6505d4efe096a6b31c70e21cf08b5febf4da62e95c265c8f571f7b36fcc3d1a17e068032f59c269fab3459d6cd3ed6949eafecf64315fca

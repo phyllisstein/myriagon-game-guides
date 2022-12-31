@@ -1,42 +1,63 @@
 {
-	"extends": "./.svelte-kit/tsconfig.json",
-	"compilerOptions": {
-		"allowJs": true,
-		"checkJs": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true,
-		"resolveJsonModule": true,
-		"skipLibCheck": true,
-		"sourceMap": true,
-		"strict": true,
-		"paths": {
-			"$lib": [
-				"src/lib"
-			],
-			"$lib/*": [
-				"src/lib/*"
-			],
-			"$styles": [
-				"src/styles"
-			],
-			"$styles/*": [
-				"src/styles/*"
-			],
-			"$components": [
-				"src/components"
-			],
-			"$components/*": [
-				"src/components/*"
-			]
-		}
-	},
-	"typeAcquisition": {
-		"enable": true
-	},
-	"plugins": [
-		{
-			"name": "typescript-styled-plugin",
-			"validate": false
-		}
-	]
+  "extends": "./.svelte-kit/tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true,
+    "paths": {
+      "$lib": [
+        "src/lib"
+      ],
+      "$lib/*": [
+        "src/lib/*"
+      ],
+      "$styles": [
+        "src/styles"
+      ],
+      "$styles/*": [
+        "src/styles/*"
+      ],
+      "$components": [
+        "src/components"
+      ],
+      "$components/*": [
+        "src/components/*"
+      ]
+    }
+  },
+  "typeAcquisition": {
+    "enable": true
+  },
+  "plugins": [
+    {
+      "name": "typescript-styled-plugin",
+      "validate": false
+    }
+  ],
+  "include": [
+    "./.svelte-kit/ambient.d.ts",
+    "./.svelte-kit/types/**/$types.d.ts",
+    "./vite.config.ts",
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.svelte",
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.svelte",
+    "./tests/**/*.js",
+    "./tests/**/*.ts",
+    "./tests/**/*.svelte",
+    "./scripts/**/*.js",
+    "./scripts/**/*.ts",
+    "./scripts/**/*.svelte"
+  ],
+  "exclude": [
+    "../node_modules/**",
+    "./[!ambient.d.ts]**"
+  ]
 }

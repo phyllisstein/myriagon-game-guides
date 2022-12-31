@@ -82,6 +82,7 @@ module.exports = {
             avoidEscape: true,
           },
         ],
+        '@typescript-eslint/require-await': 'off',
         '@typescript-eslint/semi': [
           'warn',
           'never',

@@ -1,5 +1,9 @@
+<script lang='ts'>
+  import { Editor } from '$components/editor'
+</script>
+
 <section>
-  <h1>You did the thing!</h1>
+  <Editor />
 </section>
 
 <style lang='stylus'>
@@ -9,12 +13,4 @@
     justify-content center
     width 100vw
     height 100vh
-
-  h1
-    color #333
-    font-weight 700
-    font-size 2rem
-    font-stretch condensed
-
-    font-variant-caps all-small-caps
 </style>
