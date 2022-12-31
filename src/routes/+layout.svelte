@@ -1,20 +1,15 @@
-<script>
-  import { fly } from 'svelte/transition'
+<svelte:head>
+  <title>Structur</title>
+</svelte:head>
 
-  let value = 0
+<script>
+  /* eslint-disable import/order -- Custom order based on cascade, not linter rules */
+  import '$styles/vendor/preflight.styl'
+  import '$styles/vendor/adobe-clean.styl'
+  import '$styles/vendor/adobe-clean-serif.styl'
+  import '$styles/global/body.styl'
 </script>
 
 <main>
   <slot />
-
-  {#if value}
-    <p>Value is truthy</p>
-  {:else}
-    <p>Value is falsy</p>
-  {/if}
-
-  Who likes {value} values?
-
-  <input transition:fly={{ duration: 200, y: 2000 }} bind:value={value} {...fly} />
-  <input transition:fly={{ duration: 200, y: 2000 }} bind:value={value} />
 </main>
