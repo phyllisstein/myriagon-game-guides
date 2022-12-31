@@ -248,7 +248,7 @@ module.exports = {
       '.cts',
       '.svelte',
     ],
-    'import/internal-regex': `^($lib)\b`,
+    'import/internal-regex': `^$(lib|styles|components)\b`,
     'import/parsers': {
       '@babel/parser': ['.js', '.jsx', '.cjs', '.mjs'],
       '@typescript-eslint/parser': ['.ts', '.tsx'],
