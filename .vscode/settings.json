@@ -12,10 +12,26 @@
     "typescript",
     "javascript"
   ],
-  "editor.formatOnSave": false,
-  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+  "[typescript]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+    }
+  },
+  "[svelte]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true,
+      "source.fixAll.stylelint": true
+    }
+  },
+  "[stylus]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": "stylelint.vscode-stylelint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.stylelint": true
+    }
   }
 }
