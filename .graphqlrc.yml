@@ -1,0 +1,16 @@
+schema:
+  - https://tower.voxmedia.com/graphql:
+      headers:
+        Authorization: 'Bearer ${TOWER_TOKEN}'
+exclude:
+  - './src/__generated__/**/*'
+documents:
+  - './src/**/*.ts'
+extensions:
+  codegen:
+    generates:
+      ./src/__generated__/tower.ts:
+        plugins:
+          - typescript
+          - typescript-operations
+          - typescript-resolvers
