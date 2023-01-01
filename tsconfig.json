@@ -1,6 +1,7 @@
 {
   "extends": "./.svelte-kit/tsconfig.json",
   "compilerOptions": {
+    "baseUrl": ".",
     "allowJs": true,
     "checkJs": true,
     "esModuleInterop": true,
@@ -28,7 +29,22 @@
       "$components/*": [
         "src/components/*"
       ]
-    }
+    },
+    "importsNotUsedAsValues": "error",
+		"isolatedModules": true,
+		"preserveValueImports": true,
+		"lib": [
+			"esnext",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"moduleResolution": "node",
+		"module": "esnext",
+		"target": "esnext",
+    "rootDirs": [
+      "./",
+      "./.svelte-kit/types"
+    ],
   },
   "typeAcquisition": {
     "enable": true
@@ -57,7 +73,7 @@
     "./scripts/**/*.svelte"
   ],
   "exclude": [
-    "../node_modules/**",
-    "./[!ambient.d.ts]**"
+    "./node_modules/**",
+    "./.svelte-kit/[!ambient.d.ts]**"
   ]
 }

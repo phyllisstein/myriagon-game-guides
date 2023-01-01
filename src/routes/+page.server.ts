@@ -2,7 +2,7 @@ import { pipe } from 'domain-functions'
 
 import { fetchTowerEntry, parseEntryBody } from '$lib/content.js'
 
-import type { PageLoad } from './$types'
+import type { PageServerLoad } from './$types'
 
 export const load = (async () => {
   const getEntry = pipe(
@@ -14,8 +14,8 @@ export const load = (async () => {
 
   if (!result.success) {
     console.error(`Failed to load entry:`, result.inputErrors, result.environmentErrors)
-    return {}
+    throw new Error()
   }
 
   return result.data
-}) satisfies PageLoad
+}) satisfies PageServerLoad

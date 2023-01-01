@@ -1,9 +1,9 @@
 <script lang='ts'>
   import { EntryBodyImage, EntryBodyParagraph } from '$components/entry-body'
 
-  import type { PageData } from './$types'
+  import type { PageServerData } from './$types'
 
-  export let data: PageData
+  export let data: PageServerData
 </script>
 
 <section>
