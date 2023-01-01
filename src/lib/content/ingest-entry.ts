@@ -10,7 +10,7 @@ import type { IngestEntryQuery, IngestEntryQueryVariables } from '../../__genera
 import { queryTower } from './tower-client'
 
 const {
-  NEO4J_PASSWORD = 'neo4j',
+  NEO4J_PASSWORD = 'myriagon',
   NEO4J_URI = 'bolt://localhost:7687',
   NEO4J_USERNAME = 'neo4j',
 } = env
