@@ -1,6 +1,6 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
-# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,direnv,dotenv,git,jetbrains,linux,node,nova,stylus,svelte,windows,yarn
-# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,macos,direnv,dotenv,git,jetbrains,linux,node,nova,stylus,svelte,windows,yarn
+# Created by https://www.toptal.com/developers/gitignore/api/yarn,windows,visualstudiocode,svelte,nova,node,macos,linux,jetbrains,git,dotenv,direnv
+# Edit at https://www.toptal.com/developers/gitignore?templates=yarn,windows,visualstudiocode,svelte,nova,node,macos,linux,jetbrains,git,dotenv,direnv
 
 ### direnv ###
 .direnv
@@ -327,9 +327,6 @@ dist
 ### nova ###
 .nova/*
 
-### Stylus ###
-*.css
-
 ### Svelte ###
 # gitignore template for the SvelteKit, frontend web component framework
 # website: https://kit.svelte.dev/
@@ -399,7 +396,7 @@ $RECYCLE.BIN/
 # and uncomment the following lines
 # .pnp.*
 
-# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,macos,direnv,dotenv,git,jetbrains,linux,node,nova,stylus,svelte,windows,yarn
+# End of https://www.toptal.com/developers/gitignore/api/yarn,windows,visualstudiocode,svelte,nova,node,macos,linux,jetbrains,git,dotenv,direnv
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
 
@@ -417,3 +414,5 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .yarn/cache
+__generated__
+.chorus
