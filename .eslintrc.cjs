@@ -170,10 +170,7 @@ module.exports = {
         'warnOnUnassignedImports': true,
       },
     ],
-    'indent': [
-      'error',
-      2,
-    ],
+    'indent': 'off',
     'jsx-quotes': [
       'warn',
       'prefer-single',
