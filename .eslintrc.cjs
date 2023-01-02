@@ -21,7 +21,10 @@ module.exports = {
       parserOptions: {
         ecmaVersion: 'latest',
         extraFileExtensions: ['.svelte'],
-        project: './tsconfig.json',
+        project: [
+          './tsconfig.json',
+          './.svelte-kit/tsconfig.json',
+        ],
       },
       plugins: [
         '@typescript-eslint',
@@ -232,11 +235,6 @@ module.exports = {
     'import/cache': {
       lifetime: '∞',
     },
-    'import/core-modules': [
-      '$app',
-      '$env',
-      '$service-worker',
-    ],
     'import/extensions': [
       '.js',
       '.ts',
@@ -245,15 +243,30 @@ module.exports = {
       '.cjs',
       '.cts',
       '.svelte',
+      '.d.ts',
     ],
     'import/internal-regex': `^$(lib|styles|components)\b`,
     'import/parsers': {
       '@babel/parser': ['.js', '.jsx', '.cjs', '.mjs'],
-      '@typescript-eslint/parser': ['.ts', '.tsx'],
+      '@typescript-eslint/parser': ['.d.ts', '.ts', '.tsx'],
+      'svelte-eslint-parser': ['.svelte'],
     },
     'import/resolver': {
-      node: true,
-      typescript: true,
+      'custom-alias': {
+        alias: {
+          $components: './src/components',
+          $lib: './src/lib',
+          $styles: './src/styles',
+        },
+      },
+      'node': true,
+      'typescript': {
+        alwaysTryTypes: true,
+        project: [
+          './tsconfig.json',
+          './.svelte-kit/tsconfig.json',
+        ],
+      },
     },
   },
 }
