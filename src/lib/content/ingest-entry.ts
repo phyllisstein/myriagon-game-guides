@@ -92,6 +92,22 @@ export const fetchTowerEntry = makeDomainFunction(z.object({
                   id
                 }
               }
+
+              ... on EntryBodyPullquote {
+                placement {
+                  id
+                }
+                quote {
+                  plaintext
+                }
+              }
+
+              ... on EntryBodySidebar {
+                sidebar {
+                  uuid
+                  title
+                }
+              }
             }
           }
         }
@@ -119,6 +135,7 @@ const entryBodyEmbedSchema = z.object({
     id: z.string(),
   }),
 })
+type EntryBodyEmbed = z.infer<typeof entryBodyEmbedSchema>
 
 const entryBodyImageSchema = z.object({
   __typename: z.literal('EntryBodyImage'),
@@ -132,6 +149,7 @@ const entryBodyImageSchema = z.object({
     id: z.string(),
   }),
 })
+type EntryBodyImage = z.infer<typeof entryBodyImageSchema>
 
 const entryBodyParagraphSchema = z.object({
   __typename: z.literal('EntryBodyParagraph'),
@@ -145,14 +163,27 @@ const entryBodyParagraphSchema = z.object({
     id: z.string(),
   }),
 })
-
-const entryBodyPullquoteSchema = z.object({
-  __typename: z.literal('EntryBodyPullquote'),
-})
+type EntryBodyParagraph = z.infer<typeof entryBodyParagraphSchema>
 
 const entryBodySidebarSchema = z.object({
   __typename: z.literal('EntryBodySidebar'),
+  sidebar: z.object({
+    uuid: z.string(),
+    title: z.string(),
+  }),
 })
+type EntryBodySidebar = z.infer<typeof entryBodySidebarSchema>
+
+const entryBodyPullquoteSchema = z.object({
+  __typename: z.literal('EntryBodyPullquote'),
+  placement: z.object({
+    id: z.string(),
+  }),
+  quote: z.object({
+    plaintext: z.string(),
+  }),
+})
+type EntryBodyPullquote = z.infer<typeof entryBodyPullquoteSchema>
 
 const componentSchema = z.discriminatedUnion('__typename', [
   entryBodyEmbedSchema,
@@ -161,6 +192,7 @@ const componentSchema = z.discriminatedUnion('__typename', [
   entryBodyPullquoteSchema,
   entryBodySidebarSchema,
 ])
+type EntryBodyComponent = z.infer<typeof componentSchema>
 
 const entrySchema = z.object({
   body: z.object({
@@ -198,53 +230,176 @@ export const createEntryGraph = makeDomainFunction(entrySchema)(async entry => {
 })
 
 export const createEntryBodyGraph = makeDomainFunction(entrySchema)(async entry => {
-  const session = driver.session()
+  const getComponentAttributes = (component: EntryBodyComponent) => {
+    let attributes
 
-  await session.executeWrite(async tx => {
-    const firstComponent = R.head(entry.body.components)
-    if (!firstComponent) {
-      throw new Error('Entry must have at least one body component')
+    switch (component.__typename) {
+      case 'EntryBodyImage': {
+        const {
+          __typename,
+          image,
+          placement,
+          ...rest
+        } = component
+
+        attributes = {
+          ...rest,
+          caption: image?.caption?.plaintext,
+          url: image?.url,
+          id: placement?.id,
+        }
+        break
+      }
+
+      case 'EntryBodyParagraph': {
+        const {
+          __typename,
+          format,
+          placement,
+          ...rest
+        } = component
+
+        attributes = {
+          ...rest,
+          text: format?.plaintext,
+          id: placement?.id,
+        }
+        break
+      }
+
+      case 'EntryBodyEmbed': {
+        const {
+          __typename,
+          embed: {
+            provider,
+            author,
+          },
+          placement,
+          ...rest
+        } = component
+
+        attributes = {
+          ...rest,
+          authorName: author?.name,
+          authorURL: author?.url,
+          id: placement?.id,
+          providerName: provider?.name,
+          providerURL: provider?.url,
+        }
+        break
+      }
+
+      case 'EntryBodyPullquote': {
+        const {
+          __typename,
+          placement,
+          quote,
+          ...rest
+        } = component
+
+        attributes = {
+          ...rest,
+          id: placement?.id,
+          text: quote?.plaintext,
+        }
+        break
+      }
+
+      case 'EntryBodySidebar': {
+        attributes = {
+          id: component?.sidebar?.uuid,
+          title: component?.sidebar?.title,
+        }
+        break
+      }
+
+      default:
+        return null
     }
 
-    const {
-      __typename,
-      ...props
-    } = firstComponent
+    return attributes
+  }
 
-    const labels = ['EntryBodyComponent', __typename].join(':')
+  const session = driver.session()
 
-    await tx.run(
-      `
-        MATCH (entry:Entry { uuid: $uuid })
-        MERGE (entry) -[:HAS_BODY]-> (body:EntryBody) -[:FIRST_CHILD]-> (firstChild:${ labels } $props)
-      `,
-      {
-        props,
-        uuid: entry.uuid,
-      },
-    )
+  try {
+    await session.executeWrite(async tx => {
+      const firstComponent = R.path(['body', 'components', 0], entry)
+      if (!firstComponent) {
+        throw new Error('Entry must have at least one body component')
+      }
 
-    for await (const component of R.tail(entry.body.components)) {
-      const {
-        __typename,
-        ...props
-      } = component
-      const labels = ['EntryBodyComponent', __typename].join(':')
+      const firstComponentAttributes = getComponentAttributes(firstComponent)
+      const firstComponentLabels = ['EntryBodyComponent', firstComponent.__typename].join(':')
+
+      if (!firstComponentAttributes || !firstComponentLabels) {
+        throw new Error('Entry must have at least one body component')
+      }
 
       await tx.run(
         `
-          MATCH (entry:Entry { uuid: $uuid }) -[:HAS_BODY]-> () -[:FIRST_CHILD]-> () -[:NEXT_SIBLING*1..] -> (lastSibling:EntryBodyComponent)
-          WHERE NOT (lastSibling) -[:NEXT_SIBLING]-> ()
-          MERGE (lastSibling) -[:NEXT_SIBLING]-> (nextSibling:${ labels } $props)
-        `, {
-          props,
+          MATCH (entry:Entry { uuid: $uuid })
+          MERGE (entry) -[:HAS_BODY]-> (body:EntryBody) -[:FIRST_CHILD]-> (firstChild:${ firstComponentLabels } { id: $attributes.id })
+          ON CREATE SET firstChild = $attributes
+        `,
+        {
+          attributes: firstComponentAttributes,
           uuid: entry.uuid,
         },
       )
-    }
-  })
 
-  await session.close()
+      const secondComponent = R.path(['body', 'components', 1], entry)
+      if (!secondComponent) {
+        return
+      }
+
+      const secondComponentLabels = ['EntryBodyComponent', secondComponent?.__typename].join(':')
+      const secondComponentAttributes = getComponentAttributes(secondComponent)
+      if (!secondComponentAttributes || !secondComponentLabels) {
+        return
+      }
+
+      await tx.run(
+        `
+          MATCH (entry:Entry { uuid: $uuid }) -[:HAS_BODY]-> (body:EntryBody) -[:FIRST_CHILD]-> (firstChild)
+          MERGE (firstChild) -[:NEXT_SIBLING]-> (secondChild:${ secondComponentLabels } { id: $attributes.id })
+          SET secondChild = $attributes
+        `,
+        {
+          attributes: secondComponentAttributes,
+          uuid: entry.uuid,
+        },
+      )
+
+      for await (const component of R.slice(2, Infinity, entry.body.components)) {
+        const attributes = getComponentAttributes(component)
+        const componentLabels = ['EntryBodyComponent', component.__typename].join(':')
+
+        if (!attributes || !componentLabels) {
+          console.log('Skipping component', component.__typename)
+          console.log({ attributes, componentLabels })
+          continue
+        }
+
+        await tx.run(
+          `
+            MATCH (entry:Entry { uuid: $uuid }) -[*]-> (lastSibling:EntryBodyComponent)
+            WHERE NOT EXISTS {
+              (lastSibling) -[:NEXT_SIBLING]-> ()
+            } AND NOT EXISTS {
+              (:EntryBodyComponent { id: $attributes.id })
+            }
+            MERGE (lastSibling) -[:NEXT_SIBLING]-> (nextSibling:${ componentLabels } { id: $attributes.id })
+            ON CREATE SET nextSibling += $attributes
+          `, { uuid: entry.uuid, attributes }
+        )
+      }
+    })
+  } catch (error) {
+    console.error(error)
+  } finally {
+    await session.close()
+  }
 
   return entry
 })
