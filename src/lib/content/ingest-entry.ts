@@ -135,7 +135,7 @@ const entryBodyEmbedSchema = z.object({
     id: z.string(),
   }),
 })
-type EntryBodyEmbed = z.infer<typeof entryBodyEmbedSchema>
+export type EntryBodyEmbed = z.infer<typeof entryBodyEmbedSchema>
 
 const entryBodyImageSchema = z.object({
   __typename: z.literal('EntryBodyImage'),
@@ -149,7 +149,7 @@ const entryBodyImageSchema = z.object({
     id: z.string(),
   }),
 })
-type EntryBodyImage = z.infer<typeof entryBodyImageSchema>
+export type EntryBodyImage = z.infer<typeof entryBodyImageSchema>
 
 const entryBodyParagraphSchema = z.object({
   __typename: z.literal('EntryBodyParagraph'),
@@ -163,7 +163,7 @@ const entryBodyParagraphSchema = z.object({
     id: z.string(),
   }),
 })
-type EntryBodyParagraph = z.infer<typeof entryBodyParagraphSchema>
+export type EntryBodyParagraph = z.infer<typeof entryBodyParagraphSchema>
 
 const entryBodySidebarSchema = z.object({
   __typename: z.literal('EntryBodySidebar'),
@@ -172,7 +172,7 @@ const entryBodySidebarSchema = z.object({
     title: z.string(),
   }),
 })
-type EntryBodySidebar = z.infer<typeof entryBodySidebarSchema>
+export type EntryBodySidebar = z.infer<typeof entryBodySidebarSchema>
 
 const entryBodyPullquoteSchema = z.object({
   __typename: z.literal('EntryBodyPullquote'),
@@ -183,7 +183,7 @@ const entryBodyPullquoteSchema = z.object({
     plaintext: z.string(),
   }),
 })
-type EntryBodyPullquote = z.infer<typeof entryBodyPullquoteSchema>
+export type EntryBodyPullquote = z.infer<typeof entryBodyPullquoteSchema>
 
 const componentSchema = z.discriminatedUnion('__typename', [
   entryBodyEmbedSchema,
@@ -192,7 +192,7 @@ const componentSchema = z.discriminatedUnion('__typename', [
   entryBodyPullquoteSchema,
   entryBodySidebarSchema,
 ])
-type EntryBodyComponent = z.infer<typeof componentSchema>
+export type EntryBodyComponent = z.infer<typeof componentSchema>
 
 const entrySchema = z.object({
   body: z.object({
