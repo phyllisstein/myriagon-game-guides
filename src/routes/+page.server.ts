@@ -17,5 +17,7 @@ export const load = (async () => {
     throw new Error()
   }
 
-  return result.data
+  return {
+    entry: result.data,
+  }
 }) satisfies PageServerLoad

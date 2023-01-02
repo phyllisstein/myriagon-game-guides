@@ -3,6 +3,7 @@ import { env } from '$env/dynamic/private'
 import { gql } from '@apollo/client'
 import { makeDomainFunction } from 'domain-functions'
 import neo4j from 'neo4j-driver'
+import * as R from 'ramda'
 import * as z from 'zod'
 
 import type { IngestEntryQuery, IngestEntryQueryVariables } from '../../__generated__/tower'
@@ -161,15 +162,89 @@ const componentSchema = z.discriminatedUnion('__typename', [
   entryBodySidebarSchema,
 ])
 
-export const parseEntryBody = makeDomainFunction(
-  z.object({
-    body: z.object({
-      components: z.array(componentSchema),
-    }),
-    dek: z.object({
-      plaintext: z.string(),
-    }),
-    title: z.string(),
-    uuid: z.string(),
+const entrySchema = z.object({
+  body: z.object({
+    components: z.array(componentSchema),
   }),
-)(async entry => ({ entry }))
+  dek: z.object({
+    plaintext: z.string(),
+  }),
+  title: z.string(),
+  uuid: z.string(),
+})
+
+export const parseEntryBody = makeDomainFunction(entrySchema)(async entry => entry)
+
+export const createEntryGraph = makeDomainFunction(entrySchema)(async entry => {
+  const session = driver.session()
+
+  await session.executeWrite(async tx => {
+    await tx.run(
+      `
+        MERGE (entry:Entry { uuid: $uuid, title: $title, dek: $dek })
+        RETURN entry
+      `,
+      {
+        dek: entry.dek.plaintext,
+        title: entry.title,
+        uuid: entry.uuid,
+      },
+    )
+  })
+
+  await session.close()
+
+  return entry
+})
+
+export const createEntryBodyGraph = makeDomainFunction(entrySchema)(async entry => {
+  const session = driver.session()
+
+  await session.executeWrite(async tx => {
+    const firstComponent = R.head(entry.body.components)
+    if (!firstComponent) {
+      throw new Error('Entry must have at least one body component')
+    }
+
+    const {
+      __typename,
+      ...props
+    } = firstComponent
+
+    const labels = ['EntryBodyComponent', __typename].join(':')
+
+    await tx.run(
+      `
+        MATCH (entry:Entry { uuid: $uuid })
+        MERGE (entry) -[:HAS_BODY]-> (body:EntryBody) -[:FIRST_CHILD]-> (firstChild:${ labels } $props)
+      `,
+      {
+        props,
+        uuid: entry.uuid,
+      },
+    )
+
+    for await (const component of R.tail(entry.body.components)) {
+      const {
+        __typename,
+        ...props
+      } = component
+      const labels = ['EntryBodyComponent', __typename].join(':')
+
+      await tx.run(
+        `
+          MATCH (entry:Entry { uuid: $uuid }) -[:HAS_BODY]-> () -[:FIRST_CHILD]-> () -[:NEXT_SIBLING*1..] -> (lastSibling:EntryBodyComponent)
+          WHERE NOT (lastSibling) -[:NEXT_SIBLING]-> ()
+          MERGE (lastSibling) -[:NEXT_SIBLING]-> (nextSibling:${ labels } $props)
+        `, {
+          props,
+          uuid: entry.uuid,
+        },
+      )
+    }
+  })
+
+  await session.close()
+
+  return entry
+})
