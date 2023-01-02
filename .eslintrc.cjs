@@ -1,4 +1,9 @@
 module.exports = {
+  env: [
+    'browser',
+    'shared-node-browser',
+    'es2022',
+  ],
   extends: [
     'eslint:recommended',
     'plugin:import/recommended',
