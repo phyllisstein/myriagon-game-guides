@@ -163,13 +163,13 @@ const componentSchema = z.discriminatedUnion('__typename', [
 
 export const parseEntryBody = makeDomainFunction(
   z.object({
-  uuid: z.string(),
-  title: z.string(),
-  dek: z.object({
-    plaintext: z.string(),
+    body: z.object({
+      components: z.array(componentSchema),
+    }),
+    dek: z.object({
+      plaintext: z.string(),
+    }),
+    title: z.string(),
+    uuid: z.string(),
   }),
-  body: z.object({
-    components: z.array(componentSchema),
-  }),
-})
 )(async entry => ({ entry }))
